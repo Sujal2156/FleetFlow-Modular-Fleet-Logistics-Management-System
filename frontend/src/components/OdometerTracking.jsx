@@ -11,6 +11,7 @@ export default function OdometerTracking() {
   const [submitting, setSubmitting] = useState(false);
 
   async function loadVehicles() {
+    setError("");
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api"}/vehicles`, {
         headers: {
@@ -32,14 +33,11 @@ export default function OdometerTracking() {
     if (!vehicleId) return;
 
     setLoading(true);
-    setError("");
     try {
       const [statsData, historyData] = await Promise.all([getOdometerStats(vehicleId), getOdometerHistory(vehicleId)]);
 
       setStats(statsData.stats);
       setHistory(historyData.items || []);
-    } catch (err) {
-      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -64,7 +62,11 @@ export default function OdometerTracking() {
       });
 
       setForm({ vehicleId: form.vehicleId, odometerKm: "", recordType: "Manual Check", notes: "" });
-      await loadVehicleStats(form.vehicleId);
+      try {
+        await loadVehicleStats(form.vehicleId);
+      } catch (err) {
+        setError(`Reading recorded, but failed to refresh stats: ${err.message}`);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -89,9 +91,15 @@ export default function OdometerTracking() {
           <label className="label">Select Vehicle</label>
           <select
             value={form.vehicleId}
-            onChange={(e) => {
-              setForm((prev) => ({ ...prev, vehicleId: e.target.value }));
-              loadVehicleStats(e.target.value);
+            onChange={async (e) => {
+              const vehicleId = e.target.value;
+              setForm((prev) => ({ ...prev, vehicleId }));
+              setError("");
+              try {
+                await loadVehicleStats(vehicleId);
+              } catch (err) {
+                setError(err.message);
+              }
             }}
             required
             className="input"
