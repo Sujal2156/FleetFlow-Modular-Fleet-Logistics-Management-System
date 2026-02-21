@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaTools, FaPlus, FaSearch, FaEdit, FaTrash, FaWrench, FaCar, FaCheckCircle, FaClock, FaHourglassHalf, FaExclamationTriangle } from 'react-icons/fa'
 import { maintenanceData } from '../data/mockData'
 
 function MaintenanceLogs() {
@@ -165,34 +166,34 @@ function MaintenanceLogs() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">🔧 Maintenance & Service Logs</h1>
+        <h1 className="page-title"><FaTools /> Maintenance & Service Logs</h1>
         <p className="page-subtitle">Manage and track all vehicle maintenance activities</p>
       </div>
 
       {/* Stats */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon">📋</div>
+          <div className="stat-icon"><FaCar /></div>
           <div className="stat-label">Total Records</div>
           <div className="stat-value">{stats.total}</div>
         </div>
         <div className="stat-card success">
-          <div className="stat-icon">✅</div>
+          <div className="stat-icon"><FaCheckCircle /></div>
           <div className="stat-label">Completed</div>
           <div className="stat-value">{stats.completed}</div>
         </div>
         <div className="stat-card warning">
-          <div className="stat-icon">🔄</div>
+          <div className="stat-icon"><FaHourglassHalf /></div>
           <div className="stat-label">In Progress</div>
           <div className="stat-value">{stats.inProgress}</div>
         </div>
         <div className="stat-card info">
-          <div className="stat-icon">📅</div>
+          <div className="stat-icon"><FaClock /></div>
           <div className="stat-label">Scheduled</div>
           <div className="stat-value">{stats.scheduled}</div>
         </div>
         <div className="stat-card danger">
-          <div className="stat-icon">💰</div>
+          <div className="stat-icon"><FaWrench /></div>
           <div className="stat-label">Total Cost</div>
           <div className="stat-value">${stats.totalCost.toLocaleString()}</div>
         </div>
@@ -233,9 +234,9 @@ function MaintenanceLogs() {
       {/* Maintenance Table */}
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">📊 Maintenance Records</h3>
+          <h3 className="card-title"><FaCar /> Maintenance Records</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-light)', margin: 0 }}>
-            💡 Note: Adding a service automatically marks vehicle as "In Shop" (unavailable for dispatch)
+            <FaExclamationTriangle /> Note: Adding a service automatically marks vehicle as "In Shop" (unavailable for dispatch)
           </p>
         </div>
         <div className="table-container">
@@ -292,13 +293,13 @@ function MaintenanceLogs() {
                           className="btn btn-sm btn-info"
                           onClick={() => openEditModal(record)}
                         >
-                          ✏️
+                          <FaEdit />
                         </button>
                         <button
                           className="btn btn-sm btn-danger"
                           onClick={() => handleDelete(record.id)}
                         >
-                          🗑️
+                          <FaTrash />
                         </button>
                       </div>
                     </td>
@@ -316,10 +317,11 @@ function MaintenanceLogs() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2 className="modal-title">
-                {editingRecord ? '✏️ Edit Maintenance Record' : '➕ Add New Maintenance Record'}
+                {editingRecord ? <><FaEdit /> Edit Maintenance Record</> : <><FaPlus /> Add New Maintenance Record</>}
               </h2>
               <button className="btn btn-sm btn-danger" onClick={closeModal}>✖</button>
             </div>
+
             <div className="modal-body">
               <div className="form-group">
                 <label className="form-label">Vehicle ID</label>

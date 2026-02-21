@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaUserTie, FaPhone, FaIdCard, FaTrophy, FaExclamationTriangle, FaBan, FaCalendarAlt, FaCheckCircle, FaClock, FaStar } from 'react-icons/fa'
 import { driversData } from '../data/mockData'
 
 function DriverPerformance() {
@@ -66,7 +67,7 @@ function DriverPerformance() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">👨‍✈️ Driver Performance & Safety Profiles</h1>
+        <h1 className="page-title"><FaUserTie /> Driver Performance & Safety Profiles</h1>
         <p className="page-subtitle">Monitor driver performance, safety scores, and compliance metrics</p>
       </div>
 
@@ -78,12 +79,12 @@ function DriverPerformance() {
           <div className="stat-value">{stats.totalDrivers}</div>
         </div>
         <div className="stat-card success">
-          <div className="stat-icon">✅</div>
-          <div className="stat-label">Active Drivers</div>
-          <div className="stat-value">{stats.activeDrivers}</div>
+          <div className="stat-icon"><FaCheckCircle /></div>
+          <div className="stat-label">Total Drivers</div>
+          <div className="stat-value">{drivers.length}</div>
         </div>
         <div className="stat-card info">
-          <div className="stat-icon">🛡️</div>
+          <div className="stat-icon"><FaTrophy /></div>
           <div className="stat-label">Avg Safety Score</div>
           <div className="stat-value">{stats.avgSafetyScore}%</div>
         </div>
@@ -148,15 +149,15 @@ function DriverPerformance() {
                   fontWeight: 'bold',
                   textAlign: 'center'
                 }}>
-                  ⚠️ LICENSE EXPIRED - CANNOT BE ASSIGNED
+                  <FaExclamationTriangle /> LICENSE EXPIRED - CANNOT BE ASSIGNED
                 </div>
               )}
               <div className="driver-header">
                 <div className="driver-photo">{driver.photo}</div>
                 <div className="driver-info">
                   <h3>{driver.name}</h3>
-                  <p className="driver-meta">🆔 {driver.driverId}</p>
-                  <p className="driver-meta">📞 {driver.phone}</p>
+                  <p className="driver-meta"><FaIdCard /> {driver.driverId}</p>
+                  <p className="driver-meta"><FaPhone /> {driver.phone}</p>
                   <div style={{ marginTop: '0.5rem' }}>
                     <select 
                       value={driver.status}
@@ -189,29 +190,30 @@ function DriverPerformance() {
 
               <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>📜 License Expiry</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}><FaIdCard /> License Expiry</span>
                   <span className={`badge ${licenseExpired ? 'badge-danger' : 'badge-success'}`}>
                     {driver.licenseExpiry}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>⚠️ Incidents</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}><FaExclamationTriangle /> Incidents</span>
                   <span className={`badge ${driver.incidents === 0 ? 'badge-success' : 'badge-warning'}`}>
                     {driver.incidents}
                   </span>
                 </div>
+
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>🚫 Violations</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}><FaBan /> Violations</span>
                   <span className={`badge ${driver.violations === 0 ? 'badge-success' : 'badge-danger'}`}>
                     {driver.violations}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>📅 Last Trip</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}><FaCalendarAlt /> Last Trip</span>
                   <span>{driver.lastTripDate}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>✅ Completion Rate</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}><FaCheckCircle /> Completion Rate</span>
                   <strong>{driver.onTimeDelivery}%</strong>
                 </div>
               </div>
@@ -233,7 +235,7 @@ function DriverPerformance() {
       {filteredDrivers.length === 0 && (
         <div className="card">
           <div className="empty-state">
-            <div className="empty-state-icon">👨‍✈️</div>
+            <div className="empty-state-icon"><FaUserTie /></div>
             <div className="empty-state-text">No drivers found</div>
           </div>
         </div>

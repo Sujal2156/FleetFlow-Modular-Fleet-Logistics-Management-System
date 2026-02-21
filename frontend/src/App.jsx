@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { FaTruck, FaTools, FaMoneyBillWave, FaUserTie, FaChartLine } from 'react-icons/fa'
 import './App.css'
 import MaintenanceLogs from './pages/MaintenanceLogs'
 import TripExpenseLogging from './pages/TripExpenseLogging'
@@ -9,16 +10,16 @@ function Navigation() {
   const location = useLocation();
   
   const navItems = [
-    { path: '/', label: 'Maintenance & Service', icon: '🔧' },
-    { path: '/trips', label: 'Trips & Expenses', icon: '🚛' },
-    { path: '/drivers', label: 'Driver Performance', icon: '👨‍✈️' },
-    { path: '/analytics', label: 'Analytics & Reports', icon: '📊' }
+    { path: '/', label: 'Maintenance & Service', icon: <FaTools /> },
+    { path: '/trips', label: 'Trips & Expenses', icon: <FaTruck /> },
+    { path: '/drivers', label: 'Driver Performance', icon: <FaUserTie /> },
+    { path: '/analytics', label: 'Analytics & Reports', icon: <FaChartLine /> }
   ];
 
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <h1>🚛 FleetFlow</h1>
+        <h1><FaTruck /> FleetFlow</h1>
         <p>Fleet Management System</p>
       </div>
       <ul className="nav-menu">

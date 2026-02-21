@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaChartLine, FaDollarSign, FaFileExport, FaFilePdf, FaGasPump, FaTruck, FaMoneyBillWave, FaChartBar, FaChartPie } from 'react-icons/fa'
 import { analyticsData }  from '../data/mockData'
 
 function OperationalAnalytics() {
@@ -190,38 +191,38 @@ function OperationalAnalytics() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">📊 Operational Analytics & Financial Reports</h1>
+        <h1 className="page-title"><FaChartLine /> Operational Analytics & Financial Reports</h1>
         <p className="page-subtitle">Comprehensive insights into fleet operations and financial performance</p>
       </div>
 
       {/* Key Metrics */}
       <div className="stats-grid">
         <div className="stat-card success">
-          <div className="stat-icon">💵</div>
+          <div className="stat-icon"><FaDollarSign /></div>
           <div className="stat-label">Total Revenue</div>
           <div className="stat-value">${(overview.totalRevenue / 1000).toFixed(1)}k</div>
           <div className="stat-change">+12.5% from last month</div>
         </div>
         <div className="stat-card danger">
-          <div className="stat-icon">💸</div>
+          <div className="stat-icon"><FaMoneyBillWave /></div>
           <div className="stat-label">Total Expenses</div>
           <div className="stat-value">${(overview.totalExpenses / 1000).toFixed(1)}k</div>
           <div className="stat-change">+8.3% from last month</div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">💰</div>
+          <div className="stat-icon"><FaDollarSign /></div>
           <div className="stat-label">Net Profit</div>
           <div className="stat-value">${(overview.netProfit / 1000).toFixed(1)}k</div>
           <div className="stat-change">Margin: {overview.profitMargin}%</div>
         </div>
         <div className="stat-card info">
-          <div className="stat-icon">⛽</div>
+          <div className="stat-icon"><FaGasPump /></div>
           <div className="stat-label">Fuel Efficiency</div>
           <div className="stat-value">{overview.avgFuelEfficiency} km/L</div>
           <div className="stat-change">Fleet Average</div>
         </div>
         <div className="stat-card warning">
-          <div className="stat-icon">📈</div>
+          <div className="stat-icon"><FaChartLine /></div>
           <div className="stat-label">Avg Vehicle ROI</div>
           <div className="stat-value">{calculateVehicleROI(245600, 42800, 95600, 450000)}%</div>
           <div className="stat-change">Return on Investment</div>
@@ -247,10 +248,10 @@ function OperationalAnalytics() {
           </div>
           <div className="filter-group">
             <button className="btn btn-success" onClick={generatePDF}>
-              📄 Generate PDF
+              <FaFilePdf /> Generate PDF
             </button>
             <button className="btn btn-info" onClick={() => exportToCSV('Monthly')}>
-              📊 Export CSV
+              <FaFileExport /> Export CSV
             </button>
           </div>
         </div>
@@ -260,13 +261,13 @@ function OperationalAnalytics() {
       <div className="charts-grid">
         {/* Revenue vs Expenses Chart */}
         <div className="chart-card">
-          <h3 className="chart-title">📈 Revenue vs Expenses Trend</h3>
+          <h3 className="chart-title"><FaChartLine /> Revenue vs Expenses Trend</h3>
           <LineChart data={monthlyRevenue} />
         </div>
 
         {/* Expense Breakdown Chart */}
         <div className="chart-card">
-          <h3 className="chart-title">💸 Expense Breakdown</h3>
+          <h3 className="chart-title"><FaChartPie /> Expense Breakdown</h3>
           <PieChart data={expenseBreakdown} />
         </div>
       </div>
@@ -408,7 +409,7 @@ function OperationalAnalytics() {
       {/* ROI Calculation Details */}
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">📊 Vehicle ROI Calculation</h3>
+          <h3 className="card-title"><FaTruck /> Vehicle ROI Calculation</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-light)', margin: 0 }}>
             Formula: (Revenue - (Maintenance + Fuel)) / Acquisition Cost × 100
           </p>
@@ -479,22 +480,22 @@ function OperationalAnalytics() {
 
       {/* Action Buttons */}
       <div className="card">
-        <h4 style={{ marginBottom: '1rem' }}>📥 One-Click Export Options</h4>
+        <h4 style={{ marginBottom: '1rem' }}><FaFileExport /> One-Click Export Options</h4>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-light)', marginBottom: '1rem' }}>
           Download CSV files for monthly payroll and health audits
         </p>
         <div className="flex gap-2" style={{ flexWrap: 'wrap' }}>
           <button className="btn btn-primary" onClick={() => exportToCSV('Monthly')}>
-            📅 Monthly Financial CSV
+            <FaFileExport /> Monthly Financial CSV
           </button>
           <button className="btn btn-success" onClick={() => exportToCSV('Routes')}>
-            📊 Route Performance CSV
+            <FaChartBar /> Route Performance CSV
           </button>
           <button className="btn btn-info" onClick={() => exportToCSV('Summary')}>
-            📈 Executive Summary CSV
+            <FaChartLine /> Executive Summary CSV
           </button>
           <button className="btn btn-warning" onClick={generatePDF}>
-            📄 Print/Save as PDF
+            <FaFilePdf /> Print/Save as PDF
           </button>
         </div>
       </div>

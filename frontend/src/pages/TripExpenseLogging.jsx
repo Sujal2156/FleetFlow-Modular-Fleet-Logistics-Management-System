@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaTruck, FaDollarSign, FaPlus, FaEdit, FaTrash, FaSearch, FaRoute, FaGasPump, FaMoneyBillWave, FaFileInvoiceDollar, FaTools, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import { tripsData, expensesData } from '../data/mockData'
 
 function TripExpenseLogging() {
@@ -212,34 +213,34 @@ function TripExpenseLogging() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">🚛 Trips & Expense Logging</h1>
+        <h1 className="page-title"><FaTruck /> Trips & Expense Logging</h1>
         <p className="page-subtitle">Track completed trips, fuel consumption, and operational expenses</p>
       </div>
 
       {/* Stats */}
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon">🚛</div>
+          <div className="stat-icon"><FaTruck /></div>
           <div className="stat-label">Total Trips</div>
           <div className="stat-value">{stats.totalTrips}</div>
         </div>
         <div className="stat-card success">
-          <div className="stat-icon">📏</div>
+          <div className="stat-icon"><FaRoute /></div>
           <div className="stat-label">Total Distance</div>
           <div className="stat-value">{stats.totalDistance.toLocaleString()} km</div>
         </div>
         <div className="stat-card warning">
-          <div className="stat-icon">⛽</div>
+          <div className="stat-icon"><FaGasPump /></div>
           <div className="stat-label">Total Fuel Used</div>
           <div className="stat-value">{stats.totalFuel.toLocaleString()} L</div>
         </div>
         <div className="stat-card info">
-          <div className="stat-icon">📊</div>
+          <div className="stat-icon"><FaGasPump /></div>
           <div className="stat-label">Avg Fuel Efficiency</div>
           <div className="stat-value">{stats.avgFuelEfficiency} km/L</div>
         </div>
         <div className="stat-card danger">
-          <div className="stat-icon">💰</div>
+          <div className="stat-icon"><FaDollarSign /></div>
           <div className="stat-label">Total Expenses</div>
           <div className="stat-value">${stats.totalExpenses.toLocaleString()}</div>
         </div>
@@ -287,7 +288,7 @@ function TripExpenseLogging() {
       {/* Vehicle Operational Cost Summary */}
       <div className="card">
         <div className="card-header">
-          <h3 className="card-title">💰 Total Operational Cost per Vehicle</h3>
+          <h3 className="card-title"><FaMoneyBillWave /> Total Operational Cost per Vehicle</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-light)', margin: 0 }}>
             Automated calculation: Fuel + Maintenance costs
           </p>
@@ -302,15 +303,16 @@ function TripExpenseLogging() {
                 borderRadius: 'var(--radius)',
                 border: '2px solid var(--border)'
               }}>
-                <h4 style={{ marginBottom: '0.75rem', fontSize: '1rem' }}>🚛 {vehicleId}</h4>
+                <h4 style={{ marginBottom: '0.75rem', fontSize: '1rem' }}><FaTruck /> {vehicleId}</h4>
                 <div style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  <span style={{ color: 'var(--text-light)' }}>⛽ Fuel:</span> 
+                  <span style={{ color: 'var(--text-light)' }}><FaGasPump /> Fuel:</span> 
                   <strong style={{ float: 'right' }}>${costs.fuel}</strong>
                 </div>
                 <div style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  <span style={{ color: 'var(--text-light)' }}>🔧 Maintenance:</span> 
+                  <span style={{ color: 'var(--text-light)' }}><FaTools /> Maintenance:</span> 
                   <strong style={{ float: 'right' }}>${costs.maintenance}</strong>
                 </div>
+
                 <hr style={{ margin: '0.5rem 0', border: 'none', borderTop: '1px solid var(--border)' }} />
                 <div style={{ fontSize: '1rem', fontWeight: 'bold' }}>
                   <span>Total Cost:</span> 
@@ -326,7 +328,7 @@ function TripExpenseLogging() {
       {activeTab === 'trips' && (
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">📊 Completed Trips</h3>
+            <h3 className="card-title"><FaRoute /> Completed Trips</h3>
           </div>
           <div className="table-container">
             <table>
@@ -349,7 +351,7 @@ function TripExpenseLogging() {
                   <tr>
                     <td colSpan="10" className="text-center">
                       <div className="empty-state">
-                        <div className="empty-state-icon">🚛</div>
+                        <div className="empty-state-icon"><FaTruck /></div>
                         <div className="empty-state-text">No trips found</div>
                       </div>
                     </td>
@@ -378,13 +380,13 @@ function TripExpenseLogging() {
                             className="btn btn-sm btn-info"
                             onClick={() => openEditTripModal(trip)}
                           >
-                            ✏️
+                            <FaEdit />
                           </button>
                           <button
                             className="btn btn-sm btn-danger"
                             onClick={() => handleDeleteTrip(trip.id)}
                           >
-                            🗑️
+                            <FaTrash />
                           </button>
                         </div>
                       </td>
@@ -401,7 +403,7 @@ function TripExpenseLogging() {
       {activeTab === 'expenses' && (
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">💰 Expense Records</h3>
+            <h3 className="card-title"><FaFileInvoiceDollar /> Expense Records</h3>
           </div>
           <div className="table-container">
             <table>
@@ -423,7 +425,7 @@ function TripExpenseLogging() {
                   <tr>
                     <td colSpan="9" className="text-center">
                       <div className="empty-state">
-                        <div className="empty-state-icon">💰</div>
+                        <div className="empty-state-icon"><FaDollarSign /></div>
                         <div className="empty-state-text">No expenses found</div>
                       </div>
                     </td>
@@ -446,20 +448,20 @@ function TripExpenseLogging() {
                       <td>{expense.description}</td>
                       <td><strong>${expense.amount}</strong></td>
                       <td>{expense.paymentMethod}</td>
-                      <td>{expense.receipt ? '✅' : '❌'}</td>
+                      <td>{expense.receipt ? <FaCheckCircle style={{color: 'var(--success)'}} /> : <FaTimesCircle style={{color: 'var(--danger)'}} />}</td>
                       <td>
                         <div className="flex gap-1">
                           <button
                             className="btn btn-sm btn-info"
                             onClick={() => openEditExpenseModal(expense)}
                           >
-                            ✏️
+                            <FaEdit />
                           </button>
                           <button
                             className="btn btn-sm btn-danger"
                             onClick={() => handleDeleteExpense(expense.id)}
                           >
-                            🗑️
+                            <FaTrash />
                           </button>
                         </div>
                       </td>
