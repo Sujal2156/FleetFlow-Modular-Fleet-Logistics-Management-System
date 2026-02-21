@@ -30,6 +30,18 @@ export default function ResourceSection({ title, endpoint, fields, columns }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [editingId, setEditingId] = useState(null);
+  const [relationOptions, setRelationOptions] = useState({});
+
+  function getOptionLabel(item) {
+    if (!item || typeof item !== "object") return "-";
+    if (item.vehicleNumber) return item.vehicleNumber;
+    if (item.referenceId) return item.referenceId;
+    if (item.tripCode) return item.tripCode;
+    if (item.name && item.licenseNumber) return `${item.name} (${item.licenseNumber})`;
+    if (item.name) return item.name;
+    if (item._id) return item._id;
+    return JSON.stringify(item);
+  }
 
   async function loadData() {
     setLoading(true);
@@ -52,6 +64,31 @@ export default function ResourceSection({ title, endpoint, fields, columns }) {
   useEffect(() => {
     loadData();
   }, [endpoint]);
+
+  useEffect(() => {
+    async function loadRelationOptions() {
+      const relationFields = fields.filter((field) => field.sourceEndpoint);
+      if (!relationFields.length) {
+        setRelationOptions({});
+        return;
+      }
+
+      try {
+        const optionEntries = await Promise.all(
+          relationFields.map(async (field) => {
+            const response = await listResources(field.sourceEndpoint);
+            return [field.name, response.items || []];
+          })
+        );
+
+        setRelationOptions(Object.fromEntries(optionEntries));
+      } catch {
+        setRelationOptions({});
+      }
+    }
+
+    loadRelationOptions();
+  }, [fields]);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -150,7 +187,7 @@ export default function ResourceSection({ title, endpoint, fields, columns }) {
         {fields.map((field) => (
           <div key={field.name}>
             <label className="label">{field.label}</label>
-            {field.options ? (
+            {field.options || field.sourceEndpoint ? (
               <select
                 value={form[field.name]}
                 onChange={(event) =>
@@ -163,9 +200,14 @@ export default function ResourceSection({ title, endpoint, fields, columns }) {
                 className="input"
               >
                 <option value="">Select {field.label}</option>
-                {field.options.map((option) => (
+                {field.options?.map((option) => (
                   <option key={option} value={option}>
                     {option}
+                  </option>
+                ))}
+                {(relationOptions[field.name] || []).map((optionItem) => (
+                  <option key={optionItem._id} value={optionItem._id}>
+                    {getOptionLabel(optionItem)}
                   </option>
                 ))}
               </select>
@@ -235,7 +277,7 @@ export default function ResourceSection({ title, endpoint, fields, columns }) {
                 </td>
               </tr>
             ) : (
-              items.map((item, index) => (
+              items.map((item) => (
                 <tr 
                   key={item._id} 
                   className="border-b border-slate-700 hover:bg-slate-700 hover:bg-opacity-30 transition duration-200"

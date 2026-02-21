@@ -3,7 +3,6 @@ import { getOdometerStats, getOdometerHistory, recordOdometerReading } from "../
 
 export default function OdometerTracking() {
   const [vehicles, setVehicles] = useState([]);
-  const [selectedVehicle, setSelectedVehicle] = useState("");
   const [stats, setStats] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +19,7 @@ export default function OdometerTracking() {
       });
       const data = await response.json();
       setVehicles(data.items || []);
-    } catch (err) {
+    } catch {
       setError("Failed to load vehicles");
     }
   }
@@ -92,7 +91,6 @@ export default function OdometerTracking() {
             value={form.vehicleId}
             onChange={(e) => {
               setForm((prev) => ({ ...prev, vehicleId: e.target.value }));
-              setSelectedVehicle(e.target.value);
               loadVehicleStats(e.target.value);
             }}
             required

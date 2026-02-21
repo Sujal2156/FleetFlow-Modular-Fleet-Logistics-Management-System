@@ -55,6 +55,7 @@ const fleetModules = [
       },
     ],
     columns: [
+      { key: "_id", label: "Driver ID" },
       { key: "name", label: "Name" },
       { key: "phone", label: "Phone" },
       { key: "licenseNumber", label: "License Number" },
@@ -92,9 +93,9 @@ const fleetModules = [
     endpoint: "/trips",
     fields: [
       { name: "tripCode", label: "Trip Code", required: true },
-      { name: "vehicle", label: "Vehicle ID", required: true },
-      { name: "driver", label: "Driver ID", required: true },
-      { name: "shipment", label: "Shipment ID", required: true },
+      { name: "vehicle", label: "Vehicle", required: true, sourceEndpoint: "/vehicles" },
+      { name: "driver", label: "Driver", required: true, sourceEndpoint: "/drivers" },
+      { name: "shipment", label: "Shipment", required: true, sourceEndpoint: "/shipments" },
       { name: "plannedStartAt", label: "Planned Start", type: "datetime-local", required: true },
       { name: "plannedEndAt", label: "Planned End", type: "datetime-local", required: true },
       { name: "distanceKm", label: "Distance (km)", type: "number" },
@@ -121,7 +122,7 @@ const fleetModules = [
     endpoint: "/maintenance",
     fields: [
       { name: "logId", label: "Log ID", required: true },
-      { name: "vehicle", label: "Vehicle ID", required: true },
+      { name: "vehicle", label: "Vehicle", required: true, sourceEndpoint: "/vehicles" },
       { name: "issueService", label: "Issue/Service", required: true },
       { name: "serviceDate", label: "Service Date", type: "datetime-local", required: true },
       { name: "cost", label: "Cost", type: "number", required: true },
@@ -146,9 +147,9 @@ const fleetModules = [
     endpoint: "/expenses",
     fields: [
       { name: "expenseId", label: "Expense ID", required: true },
-      { name: "trip", label: "Trip ID", required: true },
-      { name: "vehicle", label: "Vehicle ID", required: true },
-      { name: "driver", label: "Driver ID", required: true },
+      { name: "trip", label: "Trip", required: true, sourceEndpoint: "/trips" },
+      { name: "vehicle", label: "Vehicle", required: true, sourceEndpoint: "/vehicles" },
+      { name: "driver", label: "Driver", required: true, sourceEndpoint: "/drivers" },
       { name: "fuelLiters", label: "Fuel (L)", type: "number", required: true },
       { name: "fuelCost", label: "Fuel Cost", type: "number", required: true },
       { name: "miscExpense", label: "Misc Expense", type: "number" },
@@ -186,7 +187,7 @@ function App() {
       try {
         const response = await me();
         setAuthUser(response.user);
-      } catch (error) {
+      } catch {
         localStorage.removeItem("fleetflow_token");
         setAuthUser(null);
       } finally {
@@ -326,7 +327,7 @@ function App() {
                     <select
                       value={authForm.role}
                       onChange={(e) => setAuthForm({ ...authForm, role: e.target.value })}
-                      className="w-full px-4 py-3 bg-slate-100 border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="auth-select w-full px-4 py-3 bg-slate-100 border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="Dispatcher">Dispatcher</option>
                       <option value="Manager">Manager</option>

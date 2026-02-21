@@ -26,9 +26,10 @@ async function seed() {
   ]);
 
   const managerPasswordHash = await bcrypt.hash("Manager@123", 10);
-  const dispatcherPasswordHash = await bcrypt.hash("Dispatch@123", 10);
+  const dispatcherPasswordHash = await bcrypt.hash("Dispatcher@123", 10);
+  const safetyPasswordHash = await bcrypt.hash("Safety@123", 10);
 
-  const [manager, dispatcher] = await User.create([
+  const [manager, dispatcher, safetyOfficer] = await User.create([
     {
       fullName: "Fleet Manager",
       email: "manager@fleetflow.local",
@@ -40,6 +41,12 @@ async function seed() {
       email: "dispatcher@fleetflow.local",
       passwordHash: dispatcherPasswordHash,
       role: "Dispatcher",
+    },
+    {
+      fullName: "Safety Officer",
+      email: "safety@fleetflow.local",
+      passwordHash: safetyPasswordHash,
+      role: "Safety Officer",
     },
   ]);
 
@@ -241,8 +248,9 @@ async function seed() {
 
   console.log("Seed complete");
   console.log(`Manager login: manager@fleetflow.local / Manager@123`);
-  console.log(`Dispatcher login: dispatcher@fleetflow.local / Dispatch@123`);
-  console.log(`Created by seed users: ${manager.email}, ${dispatcher.email}`);
+  console.log(`Dispatcher login: dispatcher@fleetflow.local / Dispatcher@123`);
+  console.log(`Safety Officer login: safety@fleetflow.local / Safety@123`);
+  console.log(`Created users: ${manager.email}, ${dispatcher.email}, ${safetyOfficer.email}`);
 
   await mongoose.disconnect();
 }
