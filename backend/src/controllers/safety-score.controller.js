@@ -120,15 +120,19 @@ export async function calculateDriverSafetyScore(driverId) {
 
     // Create audit log if safety score is critical
     if (riskLevel === "CRITICAL") {
-      await AuditLog.create({
-        auditId: `AUD-${uuidv4().substring(0, 8).toUpperCase()}`,
-        user: null, // System generated
-        userRole: "System",
-        action: "DRIVER_SAFETY_SCORE_UPDATED",
-        resource: { type: "Driver", id: driverId },
-        severity: "CRITICAL",
-        details: `Driver safety score is CRITICAL (${safetyScore.toFixed(2)}/100). Risk Level: ${riskLevel}`,
-      });
+      try {
+        await AuditLog.create({
+          auditId: `AUD-${uuidv4().substring(0, 8).toUpperCase()}`,
+          user: null, // System generated; schema requires user, so this may fail validation
+          userRole: "System",
+          action: "DRIVER_SAFETY_SCORE_UPDATED",
+          resource: { type: "Driver", id: driverId },
+          severity: "CRITICAL",
+          details: `Driver safety score is CRITICAL (${safetyScore.toFixed(2)}/100). Risk Level: ${riskLevel}`,
+        });
+      } catch (auditError) {
+        console.error("Failed to create critical safety score audit log:", auditError);
+      }
     }
 
     return scoreRecord;
